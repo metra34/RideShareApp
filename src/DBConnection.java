@@ -1,15 +1,17 @@
 import java.sql.*;
 
 public class DBConnection {
-
-    //jdbc:postgresql:database
-    //jdbc:postgresql://host/database
-    //jdbc:postgresql://host:port/database
-    //port = 5432
-	public static final String URL      = "jdbc:postgresql:metradb.cycty0ftp5lo.us-west-2.rds.amazonaws.com:5432";
+	/**
+	URL FORMAT: 
+    jdbc:postgresql:database
+    jdbc:postgresql://host/database
+    jdbc:postgresql://host:port/database
+    port = 5432
+     **/
 	public static final String DRIVER   = "org.postgresql.Driver";
-    public static final String UID      = "";
-    public static final String PASSWORD = "";
+	public static final String URL      = "jdbc:postgresql:postgres";
+    public static final String UID      = "postgres";
+    public static final String PASSWORD = ""; // none for local testing
 
     private Connection con = null;
 

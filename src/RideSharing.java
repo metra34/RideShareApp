@@ -67,6 +67,10 @@ public class RideSharing {
             System.err.println("Exception: " + e.getMessage());
         }
     }
+    
+    public void print_rid(){
+    	
+    }
 
     public void print_rid(int rid) {
         // print all the stuff in rid
@@ -244,55 +248,77 @@ public class RideSharing {
 						System.out.println("Enter a Command:");
 						line = in.readLine();
 		                String[] argv = line.split(" ");
-		
-		                if (argv[0].equalsIgnoreCase("request")) { //request <pid> <num_riders> <pickup_lat> <pickup_lon> <dropoff_lat> <dropoff_lon>
-		                    app.add_request(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), Float.parseFloat(argv[3]), Float.parseFloat(argv[4]), Float.parseFloat(argv[5]), Float.parseFloat(argv[6]));
-							
-		
-		                } else if (argv[0].equalsIgnoreCase("rate")) { //rate <rid> <rating>
-		                    app.add_rating(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
-		
-		                } else if (argv[0].equalsIgnoreCase("search")) { //search <rid>
-							app.print_closest(Integer.parseInt(argv[1]));
-		
-		                } else if (argv[0].equalsIgnoreCase("print")) { //print <rid>
-		                    app.print_rid(Integer.parseInt(argv[1]));
-		                    
-		                } else if (argv[0].equalsIgnoreCase("drivers")) { //drivers
-		                    app.drivers();
-		
-		                } else if (argv[0].equalsIgnoreCase("accept")) { //accept <rid> <did>
-		                    app.accept(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
-		
-		                } else if (argv[0].equalsIgnoreCase("pickup")) { //pickup <rid> <datetime>
-		                	String time = argv[2]+" "+argv[3];
-		                	Timestamp t = Timestamp.valueOf(time);
-		                    app.pickup(Integer.parseInt(argv[1]), t);
-		
-		                } else if (argv[0].equalsIgnoreCase("dropoff")) { //dropoff <rid> <datetime>
-		                	String time = argv[2]+" "+argv[3];
-		                	Timestamp t = Timestamp.valueOf(time);
-		                    app.dropoff(Integer.parseInt(argv[1]), t);
-		
-		                } else if (argv[0].equalsIgnoreCase("cancel")) { //cancel <rid>
-		                    app.cancel(Integer.parseInt(argv[1]));
-		
-		                } else if (argv[0].equalsIgnoreCase("EXIT")) {
-							try{
-								app.disc();
-							} catch (SQLException e) {
-								System.err.println("Exception: " + e.getMessage());
-							}
-							line=null;
-		                    break;
-		                } else {
-							System.out.println("");
-		                    System.out.println("Unknown command");
+		                String input = argv[0].toLowerCase();
+		                
+		                switch(input){
+		                	case "request":
+		                		//USE: request <pid> <num_riders> <pickup_lat> <pickup_lon> <dropoff_lat> <dropoff_lon>
+		                		app.add_request(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), Float.parseFloat(argv[3]), Float.parseFloat(argv[4]), Float.parseFloat(argv[5]), Float.parseFloat(argv[6]));
+		                		break;
+		                		
+		                	case "rate":
+		                		//USE: rate <rid> <rating>
+		                		app.add_rating(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
+		                		break;
+		                		
+		                	case "search":
+		                		//USE: search <rid>
+		                		app.print_closest(Integer.parseInt(argv[1]));
+		                		break;
+		                		
+		                	case "print":
+		                		//USE: print <rid>
+		                		app.print_rid(Integer.parseInt(argv[1]));
+		                		break;
+		                		
+		                	case "drivers":
+		                		//USE: drivers
+		                		app.drivers();
+		                		break;
+		                		
+		                	case "accept":
+		                		//USE: accept <rid> <did>
+		                		app.accept(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
+		                		break;
+		                		
+		                	case "pickup":
+		                		//USE: pickup <rid> <datetime>
+		                		String time = argv[2]+" "+argv[3];
+			                	Timestamp t = Timestamp.valueOf(time);
+			                    app.pickup(Integer.parseInt(argv[1]), t);
+			                    break;
+		                		
+		                	case "dropoff":
+		                		//USE: dropoff <rid> <datetime>
+		                		String ti = argv[2]+" "+argv[3];
+			                	Timestamp x = Timestamp.valueOf(ti);
+			                    app.dropoff(Integer.parseInt(argv[1]), x);
+			                    break;
+		                		
+		                	case "cancel":
+		                		//cancel <rid>
+		                		app.cancel(Integer.parseInt(argv[1]));
+		                		break;
+		                		
+		                	case "exit":
+		                		try{
+									app.disc();
+								} catch (SQLException e) {
+									System.err.println("Exception: " + e.getMessage());
+								}
+								line=null;
+			                    break;
+		                		
+		                	default:
+		                		System.out.println("");
+			                    System.out.println("Unknown command");
+			                    break;
 		                }
 				} catch (Exception e) {
 							if (line==null){
 								break;
 							} else {
+								e.printStackTrace();
 								System.err.println("INVALID COMMAND");
 							}
 		       	}
